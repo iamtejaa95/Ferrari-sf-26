@@ -3,147 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FERRARI 2026 | CONCEPT</title>
+    <title>FERRARI 2026 | PROJECT 44</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&display=swap');
-        body { margin: 0; background: #000; overflow-x: hidden; font-family: 'JetBrains+Mono', monospace; color: white; }
-        #canvas-container { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 1; }
+        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Inter:wght@900&display=swap');
+        body { margin: 0; background: #000; color: white; font-family: 'JetBrains+Mono', monospace; overflow-x: hidden; touch-action: pan-y; }
+        #canvas-container { position: fixed; inset: 0; z-index: 1; }
         .scroll-section { height: 100vh; position: relative; z-index: 2; pointer-events: none; }
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 30px; }
-        .loading-screen { position: fixed; inset: 0; background: black; z-index: 100; display: flex; align-items: center; justify-content: center; transition: opacity 1s; }
+        .glass-ui { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; }
+        .loading-screen { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 1s ease-in-out; }
+        .btn-start { background: #D40000; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 2px; }
     </style>
 </head>
 <body>
-    <div id="loading" class="loading-screen">
-        <div class="text-center">
-            <h1 class="text-2xl font-black italic mb-2 tracking-tighter">SCUDERIA FERRARI</h1>
-            <p class="text-[10px] animate-pulse opacity-50 uppercase tracking-widest">Initialising 2026 Power Unit...</p>
+
+    <!-- 1. LOADING & AUDIO TRIGGER -->
+    <div id="loader" class="loading-screen">
+        <h2 class="text-[10px] tracking-[0.5em] opacity-40 uppercase mb-4">Maranello Systems</h2>
+        <h1 class="text-3xl font-black italic tracking-tighter">SF-26 VISION</h1>
+        <div id="progress-bar" class="w-48 h-[1px] bg-white/10 mt-6 overflow-hidden">
+            <div id="progress-fill" class="h-full bg-[#D40000] w-0"></div>
         </div>
+        <button id="start-btn" class="btn-start hidden">Initialise Systems</button>
     </div>
 
     <div id="canvas-container"></div>
 
-    <!-- HUD -->
-    <div class="fixed inset-0 z-50 pointer-events-none p-8 flex flex-col justify-between">
-        <div class="flex justify-between items-start">
-            <div id="header">
-                <h1 class="text-5xl md:text-8xl font-black italic tracking-tighter leading-none">FERRARI<br><span class="text-[#D40000]">2026</span></h1>
-                <p class="text-[10px] mt-4 tracking-[0.4em] uppercase opacity-40">System: Virtual Wind Tunnel v4.4</p>
+    <!-- 2. HUD OVERLAY (UI ARCHITECT) -->
+    <div class="fixed inset-0 z-50 pointer-events-none p-8 md:p-16 flex flex-col justify-between">
+        <header class="flex justify-between items-start">
+            <div>
+                <h1 id="hero-title" class="text-6xl md:text-9xl font-black italic tracking-tighter leading-none">FERRARI<br><span class="text-[#D40000]">2026</span></h1>
+                <p class="text-[10px] mt-4 opacity-40 tracking-[0.4em] uppercase">Driver: Sir Lewis Hamilton #44</p>
             </div>
-            <div class="glass p-6 text-[10px] hidden md:block border-red-900/30">
-                <p class="text-red-500 mb-1">● LIVE TELEMETRY</p>
-                <p>MGU-K: ACTIVE</p>
-                <p>DRS: STANDBY</p>
+            <div class="glass-ui p-6 hidden lg:block border-l-4 border-[#D40000]">
+                <p class="text-[#D40000] font-bold text-[10px] mb-2 animate-pulse">● TELEMETRY STREAMING</p>
+                <p class="text-[9px] opacity-60 uppercase">System Status: Optimal</p>
+                <p class="text-[9px] opacity-60 uppercase">Hybrid Deployment: 100%</p>
             </div>
-        </div>
+        </header>
 
-        <div class="flex flex-col md:flex-row justify-between items-end gap-10">
-            <div id="info-card" class="glass p-8 w-full md:w-96 border-white/5 transition-all duration-1000 translate-y-10 opacity-0">
-                <p class="text-[9px] text-red-500 font-bold uppercase mb-4 tracking-widest">Technical Specification</p>
-                <h2 id="comp-name" class="text-3xl font-black italic mb-3">CHASSIS 01</h2>
-                <p id="comp-desc" class="text-[11px] leading-relaxed opacity-50 font-light">Loading component data...</p>
+        <footer class="flex flex-col md:flex-row justify-between items-end gap-10">
+            <div id="info-card" class="glass-ui p-10 w-full md:w-[450px] opacity-0 transition-all duration-1000 translate-y-10">
+                <div class="flex justify-between items-center mb-6">
+                    <span id="step-index" class="text-[10px] bg-[#D40000] px-4 py-1 rounded-full font-bold">01</span>
+                    <span class="text-[10px] opacity-30 uppercase tracking-widest">Tech Analysis</span>
+                </div>
+                <h3 id="target-title" class="text-4xl font-bold italic mb-4 tracking-tighter uppercase">Aero Chassis</h3>
+                <p id="target-desc" class="text-xs leading-relaxed opacity-50">Advanced carbon-fiber composite with integrated cooling veins.</p>
             </div>
-            <p class="text-[8px] opacity-20">CONCEPT BY PRINCIPAL ARCHITECT | NOT AFFILIATED WITH FERRARI S.P.A.</p>
-        </div>
+            <div class="text-[8px] opacity-20 uppercase tracking-widest text-right">
+                Concept Design // Principal Architect<br>Not Affiliated with Ferrari S.p.A.
+            </div>
+        </footer>
     </div>
 
-    <!-- 8 SCROLL SECTIONS -->
+    <!-- 8 SCROLL STAGES -->
     <div class="scroll-section"></div><div class="scroll-section"></div><div class="scroll-section"></div>
     <div class="scroll-section"></div><div class="scroll-section"></div><div class="scroll-section"></div>
     <div class="scroll-section"></div><div class="scroll-section"></div>
 
-    <script type="importmap">
-        { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/" } }
-    </script>
+    <!-- LIBRARIES -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
-    <script type="module">
-        import * as THREE from 'three';
-        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+    <script>
+        // --- 1. GENERATIVE AUDIO ENGINE (PRINCIPAL ARCHITECT) ---
+        let audioCtx, oscillator, filter, gain;
+        const initAudio = () => {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            oscillator = audioCtx.createOscillator();
+            filter = audioCtx.createBiquadFilter();
+            gain = audioCtx.createGain();
 
-        // 1. SCENE SETUP
+            oscillator.type = 'sawtooth';
+            oscillator.frequency.value = 40; // Low idle
+            filter.type = 'lowpass';
+            filter.frequency.value = 800;
+            gain.gain.value = 0.05;
+
+            oscillator.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            oscillator.start();
+        };
+
+        // --- 2. WEBGL CONFIGURATION (SHADING ENGINEER) ---
         const scene = new THREE.Scene();
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
         const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.exposure = 1.5;
+        renderer.exposure = 1.4;
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Lighting
-        const hemiLight = new THREE.HemisphereLight(0xffffff, 0x000000, 0.5);
-        scene.add(hemiLight);
-        const spot = new THREE.SpotLight(0xffffff, 10);
-        spot.position.set(10, 15, 10);
-        scene.add(spot);
+        // Lighting System
+        scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+        const spot = new THREE.SpotLight(0xffffff, 50); spot.position.set(10, 20, 10); scene.add(spot);
+        const rim = new THREE.PointLight(0xD40000, 10); rim.position.set(-5, 5, -5); scene.add(rim);
 
-        // 2. LOAD HIGH-REALISM MODEL
-        let car;
-        const loader = new GLTFLoader();
-        // Loading a public F1 car model
+        // --- 3. ASSET PIPELINE & MODELS ---
+        const carGroup = new THREE.Group();
+        const engineParts = new THREE.Group(); // Sub-group for Exploded View
+        const accessories = new THREE.Group(); // For Helmets
+        scene.add(carGroup, accessories);
+
+        const loader = new THREE.GLTFLoader();
         loader.load('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/f1-car/model.gltf', (gltf) => {
-            car = gltf.scene;
-            
-            // Apply Rosso Corsa Paint to the Body
-            car.traverse((node) => {
-                if (node.isMesh) {
+            const carModel = gltf.scene;
+            carModel.traverse((node) => {
+                if(node.isMesh) {
                     node.material = new THREE.MeshPhysicalMaterial({
                         color: "#D40000",
-                        metalness: 0.9,
-                        roughness: 0.1,
-                        clearcoat: 1.0
+                        metalness: 0.8, roughness: 0.1, clearcoat: 1.0
                     });
+                    // Define engine parts for explosion
+                    if(node.name.includes('Body') || node.name.includes('Engine')) {
+                        engineParts.add(node.clone());
+                    }
+                }
+            });
+            carGroup.add(carModel);
+            
+            // Show Start Button
+            document.getElementById('progress-bar').classList.add('hidden');
+            document.getElementById('start-btn').classList.remove('hidden');
+        }, (xhr) => {
+            document.getElementById('progress-fill').style.width = (xhr.loaded / xhr.total * 100) + '%';
+        });
+
+        // Driver Helmets (Simplified High-Poly Modules)
+        const createHelmet = (color, pos) => {
+            const h = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 32), new THREE.MeshPhysicalMaterial({color: color, clearcoat: 1}));
+            h.position.set(pos[0], pos[1], pos[2]);
+            h.scale.set(0,0,0);
+            accessories.add(h);
+            return h;
+        };
+        const helmet44 = createHelmet("#EFFF00", [-2, 2, 0]); // Hamilton Yellow
+        const helmet16 = createHelmet("#FFFFFF", [2, 2, 0]); // Leclerc White
+
+        // --- 4. ANIMATION DIRECTOR & SCROLL MATRIX ---
+        gsap.registerPlugin(ScrollTrigger);
+
+        const stages = [
+            { pos: [10, 2, 10], look: [0,0,0], title: "SF-26 VISION", desc: "The aerodynamic climax of the 2026 regulations." },
+            { pos: [0, 2, -8], look: [0,1,-4], title: "REAR AERO", desc: "Dynamic DRS system with integrated air-tunnels." },
+            { pos: [0, 0.5, 7], look: [0,0,3], title: "FRONT WING", info: "High-downforce multi-plane assembly." },
+            { pos: [5, 0.5, 4], look: [2,0,4], title: "TYRE HUB", desc: "Pirelli 18-inch soft compound slicks." },
+            { pos: [0, 1.2, 0.5], look: [0,0.8,1], title: "COCKPIT", desc: "Sir Lewis Hamilton's command center." },
+            { pos: [3, 2, -2], look: [0,1,-1], title: "IDENTITY", desc: "A historic partnership: #44 meets the Tifosi." },
+            { pos: [0, 6, 0], look: [0,0,0], title: "POWER UNIT", desc: "Exploded View: V6 Turbo Hybrid Mechanical Reveal." },
+            { pos: [12, 1, 0], look: [0,0,0], title: "DRIVER MATRIX", desc: "Scuderia Ferrari 2026 Lineup confirmed." }
+        ];
+
+        document.getElementById('start-btn').addEventListener('click', () => {
+            initAudio();
+            gsap.to("#loader", { opacity: 0, duration: 1, onComplete: () => document.getElementById('loader').remove() });
+            initTimeline();
+        });
+
+        function initTimeline() {
+            const tl = gsap.timeline({
+                scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1.5 }
+            });
+
+            stages.forEach((s, i) => {
+                // Camera Animation
+                tl.to(camera.position, {
+                    x: s.pos[0], y: s.pos[1], z: s.pos[2],
+                    duration: 3, ease: "power2.inOut",
+                    onUpdate: () => {
+                        camera.lookAt(s.look[0], s.look[1], s.look[2]);
+                        // Audio Pitch Modulation
+                        if(oscillator) oscillator.frequency.value = 40 + (window.scrollY / 10);
+                    },
+                    onStart: () => {
+                        gsap.to("#info-card", { opacity: 1, y: 0, duration: 1 });
+                        document.getElementById('target-title').innerText = s.title;
+                        document.getElementById('target-desc').innerText = s.desc;
+                        document.getElementById('step-index').innerText = "0" + (i + 1);
+                    }
+                }, i * 3);
+
+                // STAGE 6: ENGINE EXPLOSION (IMAGE 1)
+                if(i === 6) {
+                    tl.to(carGroup.position, { y: -2, duration: 1 }, i * 3);
+                    carGroup.children.forEach(c => {
+                        tl.to(c.position, { y: 3, duration: 2, ease: "power4.out" }, i * 3);
+                    });
+                }
+
+                // STAGE 7: HELMET DEPLOYMENT (IMAGE 10/11)
+                if(i === 7) {
+                    tl.to(helmet44.scale, { x:1, y:1, z:1, duration: 1 }, i * 3);
+                    tl.to(helmet16.scale, { x:1, y:1, z:1, duration: 1 }, i * 3);
                 }
             });
 
-            scene.add(car);
-            document.getElementById('loading').style.opacity = '0';
-            setTimeout(() => document.getElementById('loading').remove(), 1000);
-        });
-
-        // 3. ANIMATION MATRIX
-        gsap.registerPlugin(ScrollTrigger);
-        
-        const states = [
-            { pos: [8, 2, 10], look: [0,0,0], name: "ROSSO CORSA 2026", desc: "The future of Scuderia Ferrari. Advanced carbon-titanium monocoque architecture." },
-            { pos: [0, 2, -6], look: [0,1,-3], name: "REAR WING ASSEMBLY", desc: "Active aero components designed to maximize downforce while reducing turbulent wake." },
-            { pos: [0, 0.5, 6], look: [0,0,3], name: "FRONT DOWNFORCE", desc: "Complex 5-element wing structure with integrated brake duct cooling vents." },
-            { pos: [4, 0.5, 3], look: [2,0,3], name: "TYRE SYSTEM", desc: "Pirelli 18-inch soft compounds with intelligent sensor arrays." },
-            { pos: [0, 1.5, 0.5], look: [0,0.8,1], name: "THE COCKPIT", desc: "Custom seat molded to Sir Lewis Hamilton's biometric data." },
-            { pos: [2, 1.8, -2], look: [0,1,-1], name: "IDENTITY 44", desc: "A new era begins. Seven-time champion meets the most iconic brand." },
-            { pos: [0, 4, 0], look: [0,0,0], name: "POWER UNIT", desc: "V6 Turbo Hybrid with 50% electric power deployment (2026 Regs)." },
-            { pos: [12, 1, 0], look: [0,0,0], name: "READY TO RACE", desc: "Mission Winnow. Forza Ferrari." }
-        ];
-
-        const tl = gsap.timeline({
-            scrollTrigger: {
-                trigger: "body",
-                start: "top top",
-                end: "bottom bottom",
-                scrub: 1.5,
-                onUpdate: (self) => {
-                    const i = Math.min(Math.floor(self.progress * 8), 7);
-                    document.getElementById('comp-name').innerText = states[i].name;
-                    document.getElementById('comp-desc').innerText = states[i].desc;
-                    document.getElementById('info-card').style.opacity = 1;
-                    document.getElementById('info-card').style.transform = "translateY(0)";
-                }
-            }
-        });
-
-        camera.position.set(8, 2, 10);
-
-        states.forEach((s, idx) => {
-            tl.to(camera.position, { x: s.pos[0], y: s.pos[1], z: s.pos[2], duration: 2 }, idx * 2);
-        });
+            // INFINITE RESET ENGINE
+            ScrollTrigger.create({
+                trigger: "body", start: "95% bottom",
+                onEnter: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
+            });
+        }
 
         function animate() {
             requestAnimationFrame(animate);
             renderer.render(scene, camera);
         }
         animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
     </script>
 </body>
-  </html>
+</html>
