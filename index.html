@@ -3,61 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>FERRARI 2026 | MOBILE VISION</title>
+    <title>FERRARI 2026 | DIGITAL TWIN</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@400;700&display=swap');
-        body { margin: 0; background: #000; color: #fff; font-family: 'JetBrains+Mono', monospace; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        body { margin: 0; background: #000; color: #fff; font-family: 'JetBrains+Mono', monospace; overflow-x: hidden; touch-action: pan-y; }
         #canvas-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
         .scroll-section { height: 100vh; position: relative; z-index: 2; pointer-events: none; }
-        
-        /* Professional Glassmorphism UI */
-        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 35px; }
-        
-        /* Fast Loader Animation */
-        .loader { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease-out; }
-        .progress-line { width: 120px; height: 1px; background: rgba(212, 0, 0, 0.2); margin-top: 20px; position: relative; overflow: hidden; }
-        .progress-fill { position: absolute; left: 0; height: 100%; width: 0%; background: #D40000; transition: width 0.3s; }
-        
-        /* Typography Animation */
-        .reveal { opacity: 0; transform: translateY(20px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
-        .reveal.active { opacity: 1; transform: translateY(0); }
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 40px; }
+        .loader { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.5s ease-out; }
     </style>
 </head>
 <body>
 
-    <!-- 1. INSTANT HUD (Loads immediately) -->
     <div id="loader" class="loader">
-        <h2 class="text-[9px] tracking-[0.5em] opacity-30 uppercase mb-2">Scuderia Ferrari</h2>
+        <h2 class="text-[9px] tracking-[0.5em] opacity-30 uppercase mb-2">Maranello Digital Twin</h2>
         <h1 class="text-xl font-black italic tracking-tighter">SF-26 VISION</h1>
-        <div class="progress-line"><div id="fill" class="progress-fill"></div></div>
+        <p class="text-[8px] mt-4 opacity-20 uppercase animate-pulse">Building Procedural Geometry...</p>
     </div>
 
     <div id="canvas-container"></div>
 
+    <!-- HUD OVERLAY -->
     <div class="fixed inset-0 z-50 pointer-events-none p-6 md:p-12 flex flex-col justify-between">
         <header class="flex justify-between items-start">
-            <div id="header-text" class="reveal">
-                <h1 class="text-5xl md:text-8xl font-black italic tracking-tighter leading-[0.8] mb-2">SF-26<br><span class="text-[#D40000]">STRADALE</span></h1>
-                <p class="text-[9px] tracking-[0.4em] opacity-40 uppercase">Project 44 // Hamilton Edition</p>
+            <div>
+                <h1 class="text-5xl md:text-8xl font-black italic tracking-tighter leading-[0.8] mb-2">SF-26<br><span class="text-[#D40000]">STUDIO</span></h1>
+                <p class="text-[9px] tracking-[0.4em] opacity-40 uppercase">Hamilton Edition // Prototyping</p>
             </div>
-            <div class="glass p-5 hidden md:block text-[9px] opacity-60">
-                <p class="text-[#D40000] font-bold mb-1 tracking-widest">● LIVE STREAM</p>
-                <p>PU: HYBRID V6 TURBO</p>
-                <p>CORE: CARBON-TITANIUM</p>
+            <div class="glass p-6 hidden md:block text-[9px] opacity-70 border-l-4 border-[#D40000]">
+                <p class="text-[#D40000] font-bold mb-1 uppercase tracking-widest">● System Status</p>
+                <p>GEOMETRY: GENERATIVE</p>
+                <p>LIGHTING: 4-POINT STUDIO</p>
             </div>
         </header>
 
         <footer class="flex flex-col md:flex-row justify-between items-end gap-6">
-            <div id="card" class="glass p-8 w-full md:w-80 opacity-0 translate-y-10 transition-all duration-1000">
+            <div id="card" class="glass p-8 w-full md:w-96 opacity-0 translate-y-10 transition-all duration-1000">
                 <div class="flex justify-between items-center mb-4">
-                    <span id="step-id" class="text-[9px] bg-[#D40000] px-3 py-0.5 rounded-full font-bold italic">01</span>
-                    <span class="text-[8px] opacity-40 uppercase tracking-widest">Tech Analysis</span>
+                    <span id="step-id" class="text-[9px] bg-[#D40000] px-3 py-0.5 rounded-full font-bold">01</span>
+                    <span class="text-[8px] opacity-40 uppercase tracking-widest">Digital Analysis</span>
                 </div>
-                <h3 id="ui-title" class="text-2xl font-black italic mb-2 uppercase text-[#D40000]">Aero Monocoque</h3>
-                <p id="ui-desc" class="text-[10px] leading-relaxed opacity-50">Advanced carbon weave optimized for 2026 G-loads.</p>
+                <h3 id="ui-title" class="text-3xl font-black italic mb-2 uppercase text-[#D40000] leading-none">Aero Chassis</h3>
+                <p id="ui-desc" class="text-[10px] leading-relaxed opacity-50">High-fidelity procedural monocoque architecture.</p>
             </div>
-            <p class="text-[7px] opacity-20 tracking-widest uppercase">Concept Build // Not Affiliated with Ferrari S.p.A.</p>
+            <p class="text-[7px] opacity-20 tracking-widest uppercase">Zero-Asset Build // No External Downloads</p>
         </footer>
     </div>
 
@@ -66,9 +56,7 @@
     <div class="scroll-section"></div><div class="scroll-section"></div><div class="scroll-section"></div>
     <div class="scroll-section"></div><div class="scroll-section"></div>
 
-    <!-- 3D LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
@@ -76,116 +64,126 @@
         // --- 1. THE STUDIO ENGINE ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.exposure = 2.0; // High brightness for mobile screens
+        renderer.exposure = 2.5; // EXTREME BRIGHTNESS
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Professional Studio Lights
-        const ambient = new THREE.AmbientLight(0xffffff, 0.4); scene.add(ambient);
-        const topLight = new THREE.DirectionalLight(0xffffff, 3); topLight.position.set(0, 10, 0); scene.add(topLight);
-        const rim = new THREE.PointLight(0xD40000, 15); rim.position.set(-5, 2, -5); scene.add(rim);
+        // Professional Studio Lighting rig
+        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
+        const key = new THREE.DirectionalLight(0xffffff, 4); key.position.set(5, 10, 7); scene.add(key);
+        const rim = new THREE.PointLight(0xD40000, 40); rim.position.set(-5, 5, -5); scene.add(rim);
+        const top = new THREE.PointLight(0xffffff, 20); top.position.set(0, 8, 0); scene.add(top);
 
-        // --- 2. THE REAL CAR & EXPLOSION ENGINE ---
-        const carGroup = new THREE.Group();
-        const shellParts = []; // Parts that fly away (Image 1)
-        const engineCore = new THREE.Group(); // Internal mechanics
-        scene.add(carGroup);
+        // Polished Studio Floor
+        const floorGeo = new THREE.PlaneGeometry(100, 100);
+        const floorMat = new THREE.MeshPhysicalMaterial({ color: 0x050505, metalness: 0.8, roughness: 0.1 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.position.y = -0.5;
+        scene.add(floor);
 
-        const loader = new THREE.GLTFLoader();
-        // Loading a high-speed, mobile-optimized F1 asset
-        loader.load('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/f1-car/model.gltf', (gltf) => {
-            const model = gltf.scene;
-            
-            model.traverse((n) => {
-                if(n.isMesh) {
-                    // APPLY ROSSO CORSA FORMULA
-                    n.material = new THREE.MeshPhysicalMaterial({
-                        color: "#D40000", metalness: 0.8, roughness: 0.1, clearcoat: 1.0, reflectivity: 1
-                    });
-                    
-                    // Tagging parts for Stage 6 (Exploded View)
-                    if(n.name.includes('Body') || n.name.includes('Cover') || n.name.includes('Wing')) {
-                        shellParts.push(n);
-                    }
-                }
-            });
+        // --- 2. PROCEDURAL FERRARI (BUILT WITH CODE) ---
+        const car = new THREE.Group();
+        const bodyShell = new THREE.Group(); // Parts that fly away
+        const internalEngine = new THREE.Group(); // Hidden parts
+        car.add(bodyShell, internalEngine);
+        scene.add(car);
 
-            carGroup.add(model);
-            
-            // Start Visuals
-            document.getElementById('loader').style.opacity = '0';
-            setTimeout(() => {
-                document.getElementById('loader').remove();
-                document.getElementById('header-text').classList.add('active');
-                initAnimationMatrix();
-            }, 600);
-        }, (xhr) => {
-            document.getElementById('fill').style.width = (xhr.loaded / xhr.total * 100) + '%';
+        // Materials
+        const rossoCorsa = new THREE.MeshPhysicalMaterial({ color: "#D40000", metalness: 0.9, roughness: 0.05, clearcoat: 1.0 });
+        const carbon = new THREE.MeshStandardMaterial({ color: 0x111111, roughness: 0.5 });
+        const engineMat = new THREE.MeshPhysicalMaterial({ color: 0x444444, metalness: 1, roughness: 0.2 });
+
+        // Build Body Shell (Fly-away parts)
+        const mainBody = new THREE.Mesh(new THREE.BoxGeometry(2.2, 0.4, 7), rossoCorsa);
+        bodyShell.add(mainBody);
+        
+        const cockpit = new THREE.Mesh(new THREE.CapsuleGeometry(0.5, 1.5, 4, 16), rossoCorsa);
+        cockpit.rotation.x = Math.PI/2; cockpit.position.set(0, 0.3, 0.5);
+        bodyShell.add(cockpit);
+
+        const rearWing = new THREE.Mesh(new THREE.BoxGeometry(2.5, 0.1, 1), rossoCorsa);
+        rearWing.position.set(0, 0.8, -3.2);
+        bodyShell.add(rearWing);
+
+        // Build Internal Engine (Revealed at Stage 6)
+        for(let i=0; i<6; i++) {
+            const cyl = new THREE.Mesh(new THREE.CylinderGeometry(0.2, 0.2, 0.8), engineMat);
+            cyl.position.set(i%2==0?0.3:-0.3, 0, -1 - (i*0.4));
+            cyl.rotation.x = Math.PI/2;
+            internalEngine.add(cyl);
+        }
+        internalEngine.position.y = 0.2;
+        internalEngine.scale.set(0,0,0); // Hidden initially
+
+        // Wheels
+        const wheelGeo = new THREE.CylinderGeometry(0.5, 0.5, 0.4, 32);
+        const wheelMat = new THREE.MeshStandardMaterial({ color: 0x050505 });
+        const wheelPositions = [[1.2, 0, 2.5], [-1.2, 0, 2.5], [1.2, 0, -2.5], [-1.2, 0, -2.5]];
+        wheelPositions.forEach(p => {
+            const w = new THREE.Mesh(wheelGeo, wheelMat);
+            w.rotation.z = Math.PI/2; w.position.set(p[0], p[1], p[2]);
+            car.add(w);
         });
 
-        // --- 3. ANIMATION MATRIX (Mobile Scroll Optimized) ---
+        // --- 3. ANIMATION MATRIX ---
         gsap.registerPlugin(ScrollTrigger);
 
         const states = [
-            { pos: [10, 2, 10], look: [0,0,0], t: "SF-26 VISION", d: "The future of Scuderia Ferrari." },
-            { pos: [0, 2, -7], look: [0,1,-4], t: "REAR AERO", d: "Active DRS and diffuser tunnels." },
-            { pos: [0, 0.5, 7], look: [0,0,4], t: "FRONT DOWNFORCE", d: "Multi-element wing assembly." },
-            { pos: [4, 0.5, 4], look: [2,0,3], t: "TYRE HUB", d: "Pirelli 18-inch soft compounds." },
-            { pos: [0, 1.2, 0.5], look: [0,0.8,1], t: "THE COCKPIT", d: "Command center for Hamilton #44." },
-            { pos: [3, 2, -2], look: [0,1.5,-1], t: "IDENTITY", d: "Seven-time champion meets the Tifosi." },
-            { pos: [0, 5, 0], look: [0,0,0], t: "ENGINE DECODE", d: "Revealing the V6 Turbo Hybrid (Stage 6)." },
-            { pos: [14, 1.5, 0], look: [0,0.5,0], t: "READY TO RACE", d: "Forza Ferrari. Mission 2026." }
+            { pos: [10, 2, 10], look: [0,0,0], t: "SF-26 VISION", d: "Aero-monocoque digital twin." },
+            { pos: [0, 2, -7], look: [0,1,-3], t: "REAR AERO", d: "DRS activation point. High downforce." },
+            { pos: [0, 0.5, 7], look: [0,0,3], t: "FRONT WING", d: "Ground-effect optimized foils." },
+            { pos: [4, 0.5, 4], look: [2,0,3], t: "TYRE HUB", d: "Pirelli 18-inch soft compound." },
+            { pos: [0, 1.2, 0.5], look: [0,0.8,1], t: "COCKPIT #44", d: "Lewis Hamilton command center." },
+            { pos: [3, 2, -2], look: [0,1.5,-1], t: "POWER UNIT", d: "V6 Turbo Hybrid architecture." },
+            { pos: [0, 6, 0], look: [0,0,0], t: "ENGINE DECODE", d: "Structural disassembly: Stage 6 reveal." },
+            { pos: [12, 1.5, 0], look: [0,0.5,0], t: "READY TO RACE", d: "Forza Ferrari. Mission 2026." }
         ];
 
-        function initAnimationMatrix() {
-            camera.position.set(states[0].pos[0], states[0].pos[1], states[0].pos[2]);
+        camera.position.set(states[0].pos[0], states[0].pos[1], states[0].pos[2]);
 
-            const tl = gsap.timeline({
-                scrollTrigger: {
-                    trigger: "body", start: "top top", end: "bottom bottom", scrub: 1.2
+        const tl = gsap.timeline({
+            scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1.2 }
+        });
+
+        states.forEach((s, i) => {
+            tl.to(camera.position, {
+                x: s.pos[0], y: s.pos[1], z: s.pos[2],
+                duration: 3, ease: "power2.inOut",
+                onUpdate: () => camera.lookAt(s.look[0], s.look[1], s.look[2]),
+                onStart: () => {
+                    gsap.to("#card", { opacity: 1, y: 0, duration: 1 });
+                    document.getElementById('ui-title').innerText = s.t;
+                    document.getElementById('ui-desc').innerText = s.d;
+                    document.getElementById('step-id').innerText = "0" + (i + 1);
                 }
-            });
+            }, i * 3);
 
-            states.forEach((s, i) => {
-                tl.to(camera.position, {
-                    x: s.pos[0], y: s.pos[1], z: s.pos[2],
-                    duration: 3, ease: "power2.inOut",
-                    onUpdate: () => camera.lookAt(s.look[0], s.look[1], s.look[2]),
-                    onStart: () => {
-                        gsap.to("#card", { opacity: 1, y: 0, duration: 1 });
-                        document.getElementById('ui-title').innerText = s.t;
-                        document.getElementById('ui-desc').innerText = s.d;
-                        document.getElementById('step-id').innerText = "0" + (i + 1);
-                    }
-                }, i * 3);
+            // STAGE 6: THE EXPLODED REVEAL (IMAGE 1)
+            if(i === 6) {
+                tl.to(bodyShell.position, { y: 4, duration: 2, ease: "expo.out" }, i * 3);
+                tl.to(internalEngine.scale, { x: 1.2, y: 1.2, z: 1.2, duration: 1 }, i * 3);
+            }
+        });
 
-                // THE CLIMAX: MECHANICAL EXPLOSION (Stage 6)
-                if(i === 6) {
-                    shellParts.forEach((part, pIdx) => {
-                        tl.to(part.position, { y: 4 + (pIdx*0.2), duration: 2, ease: "expo.out" }, i * 3);
-                    });
-                }
-            });
-            
-            // Loop Back Reset
-            ScrollTrigger.create({
-                trigger: "body", start: "98% bottom",
-                onEnter: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
-            });
-        }
+        // Instant Start
+        window.onload = () => {
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => document.getElementById('loader').remove(), 600);
+            animate();
+        };
 
         function animate() {
             requestAnimationFrame(animate);
+            car.rotation.y += 0.001; // Studio rotate
             renderer.render(scene, camera);
         }
-        animate();
 
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
+            camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
