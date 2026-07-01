@@ -2,59 +2,62 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FERRARI 2026 | PROJECT 44</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FERRARI 2026 | MOBILE VISION</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Inter:wght@900&display=swap');
-        body { margin: 0; background: #000; color: white; font-family: 'JetBrains+Mono', monospace; overflow-x: hidden; touch-action: pan-y; }
-        #canvas-container { position: fixed; inset: 0; z-index: 1; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=JetBrains+Mono:wght@400;700&display=swap');
+        body { margin: 0; background: #000; color: #fff; font-family: 'JetBrains+Mono', monospace; overflow-x: hidden; -webkit-font-smoothing: antialiased; }
+        #canvas-container { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
         .scroll-section { height: 100vh; position: relative; z-index: 2; pointer-events: none; }
-        .glass-ui { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 40px; }
-        .loading-screen { position: fixed; inset: 0; background: #000; z-index: 9999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: 1s ease-in-out; }
-        .btn-start { background: #D40000; padding: 15px 40px; border-radius: 50px; font-weight: bold; cursor: pointer; margin-top: 20px; text-transform: uppercase; letter-spacing: 2px; }
+        
+        /* Professional Glassmorphism UI */
+        .glass { background: rgba(255, 255, 255, 0.02); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 35px; }
+        
+        /* Fast Loader Animation */
+        .loader { position: fixed; inset: 0; background: #000; z-index: 999; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: opacity 0.6s ease-out; }
+        .progress-line { width: 120px; height: 1px; background: rgba(212, 0, 0, 0.2); margin-top: 20px; position: relative; overflow: hidden; }
+        .progress-fill { position: absolute; left: 0; height: 100%; width: 0%; background: #D40000; transition: width 0.3s; }
+        
+        /* Typography Animation */
+        .reveal { opacity: 0; transform: translateY(20px); transition: 1s cubic-bezier(0.16, 1, 0.3, 1); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
     </style>
 </head>
 <body>
 
-    <!-- 1. LOADING & AUDIO TRIGGER -->
-    <div id="loader" class="loading-screen">
-        <h2 class="text-[10px] tracking-[0.5em] opacity-40 uppercase mb-4">Maranello Systems</h2>
-        <h1 class="text-3xl font-black italic tracking-tighter">SF-26 VISION</h1>
-        <div id="progress-bar" class="w-48 h-[1px] bg-white/10 mt-6 overflow-hidden">
-            <div id="progress-fill" class="h-full bg-[#D40000] w-0"></div>
-        </div>
-        <button id="start-btn" class="btn-start hidden">Initialise Systems</button>
+    <!-- 1. INSTANT HUD (Loads immediately) -->
+    <div id="loader" class="loader">
+        <h2 class="text-[9px] tracking-[0.5em] opacity-30 uppercase mb-2">Scuderia Ferrari</h2>
+        <h1 class="text-xl font-black italic tracking-tighter">SF-26 VISION</h1>
+        <div class="progress-line"><div id="fill" class="progress-fill"></div></div>
     </div>
 
     <div id="canvas-container"></div>
 
-    <!-- 2. HUD OVERLAY (UI ARCHITECT) -->
-    <div class="fixed inset-0 z-50 pointer-events-none p-8 md:p-16 flex flex-col justify-between">
+    <div class="fixed inset-0 z-50 pointer-events-none p-6 md:p-12 flex flex-col justify-between">
         <header class="flex justify-between items-start">
-            <div>
-                <h1 id="hero-title" class="text-6xl md:text-9xl font-black italic tracking-tighter leading-none">FERRARI<br><span class="text-[#D40000]">2026</span></h1>
-                <p class="text-[10px] mt-4 opacity-40 tracking-[0.4em] uppercase">Driver: Sir Lewis Hamilton #44</p>
+            <div id="header-text" class="reveal">
+                <h1 class="text-5xl md:text-8xl font-black italic tracking-tighter leading-[0.8] mb-2">SF-26<br><span class="text-[#D40000]">STRADALE</span></h1>
+                <p class="text-[9px] tracking-[0.4em] opacity-40 uppercase">Project 44 // Hamilton Edition</p>
             </div>
-            <div class="glass-ui p-6 hidden lg:block border-l-4 border-[#D40000]">
-                <p class="text-[#D40000] font-bold text-[10px] mb-2 animate-pulse">● TELEMETRY STREAMING</p>
-                <p class="text-[9px] opacity-60 uppercase">System Status: Optimal</p>
-                <p class="text-[9px] opacity-60 uppercase">Hybrid Deployment: 100%</p>
+            <div class="glass p-5 hidden md:block text-[9px] opacity-60">
+                <p class="text-[#D40000] font-bold mb-1 tracking-widest">● LIVE STREAM</p>
+                <p>PU: HYBRID V6 TURBO</p>
+                <p>CORE: CARBON-TITANIUM</p>
             </div>
         </header>
 
-        <footer class="flex flex-col md:flex-row justify-between items-end gap-10">
-            <div id="info-card" class="glass-ui p-10 w-full md:w-[450px] opacity-0 transition-all duration-1000 translate-y-10">
-                <div class="flex justify-between items-center mb-6">
-                    <span id="step-index" class="text-[10px] bg-[#D40000] px-4 py-1 rounded-full font-bold">01</span>
-                    <span class="text-[10px] opacity-30 uppercase tracking-widest">Tech Analysis</span>
+        <footer class="flex flex-col md:flex-row justify-between items-end gap-6">
+            <div id="card" class="glass p-8 w-full md:w-80 opacity-0 translate-y-10 transition-all duration-1000">
+                <div class="flex justify-between items-center mb-4">
+                    <span id="step-id" class="text-[9px] bg-[#D40000] px-3 py-0.5 rounded-full font-bold italic">01</span>
+                    <span class="text-[8px] opacity-40 uppercase tracking-widest">Tech Analysis</span>
                 </div>
-                <h3 id="target-title" class="text-4xl font-bold italic mb-4 tracking-tighter uppercase">Aero Chassis</h3>
-                <p id="target-desc" class="text-xs leading-relaxed opacity-50">Advanced carbon-fiber composite with integrated cooling veins.</p>
+                <h3 id="ui-title" class="text-2xl font-black italic mb-2 uppercase text-[#D40000]">Aero Monocoque</h3>
+                <p id="ui-desc" class="text-[10px] leading-relaxed opacity-50">Advanced carbon weave optimized for 2026 G-loads.</p>
             </div>
-            <div class="text-[8px] opacity-20 uppercase tracking-widest text-right">
-                Concept Design // Principal Architect<br>Not Affiliated with Ferrari S.p.A.
-            </div>
+            <p class="text-[7px] opacity-20 tracking-widest uppercase">Concept Build // Not Affiliated with Ferrari S.p.A.</p>
         </footer>
     </div>
 
@@ -63,150 +66,113 @@
     <div class="scroll-section"></div><div class="scroll-section"></div><div class="scroll-section"></div>
     <div class="scroll-section"></div><div class="scroll-section"></div>
 
-    <!-- LIBRARIES -->
+    <!-- 3D LIBRARIES -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/0.160.0/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/examples/js/loaders/GLTFLoader.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
     <script>
-        // --- 1. GENERATIVE AUDIO ENGINE (PRINCIPAL ARCHITECT) ---
-        let audioCtx, oscillator, filter, gain;
-        const initAudio = () => {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            oscillator = audioCtx.createOscillator();
-            filter = audioCtx.createBiquadFilter();
-            gain = audioCtx.createGain();
-
-            oscillator.type = 'sawtooth';
-            oscillator.frequency.value = 40; // Low idle
-            filter.type = 'lowpass';
-            filter.frequency.value = 800;
-            gain.gain.value = 0.05;
-
-            oscillator.connect(filter);
-            filter.connect(gain);
-            gain.connect(audioCtx.destination);
-            oscillator.start();
-        };
-
-        // --- 2. WEBGL CONFIGURATION (SHADING ENGINEER) ---
+        // --- 1. THE STUDIO ENGINE ---
         const scene = new THREE.Scene();
         const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "high-performance" });
         renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
         renderer.toneMapping = THREE.ACESFilmicToneMapping;
-        renderer.exposure = 1.4;
+        renderer.exposure = 2.0; // High brightness for mobile screens
         document.getElementById('canvas-container').appendChild(renderer.domElement);
 
-        // Lighting System
-        scene.add(new THREE.AmbientLight(0xffffff, 0.2));
-        const spot = new THREE.SpotLight(0xffffff, 50); spot.position.set(10, 20, 10); scene.add(spot);
-        const rim = new THREE.PointLight(0xD40000, 10); rim.position.set(-5, 5, -5); scene.add(rim);
+        // Professional Studio Lights
+        const ambient = new THREE.AmbientLight(0xffffff, 0.4); scene.add(ambient);
+        const topLight = new THREE.DirectionalLight(0xffffff, 3); topLight.position.set(0, 10, 0); scene.add(topLight);
+        const rim = new THREE.PointLight(0xD40000, 15); rim.position.set(-5, 2, -5); scene.add(rim);
 
-        // --- 3. ASSET PIPELINE & MODELS ---
+        // --- 2. THE REAL CAR & EXPLOSION ENGINE ---
         const carGroup = new THREE.Group();
-        const engineParts = new THREE.Group(); // Sub-group for Exploded View
-        const accessories = new THREE.Group(); // For Helmets
-        scene.add(carGroup, accessories);
+        const shellParts = []; // Parts that fly away (Image 1)
+        const engineCore = new THREE.Group(); // Internal mechanics
+        scene.add(carGroup);
 
         const loader = new THREE.GLTFLoader();
+        // Loading a high-speed, mobile-optimized F1 asset
         loader.load('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/f1-car/model.gltf', (gltf) => {
-            const carModel = gltf.scene;
-            carModel.traverse((node) => {
-                if(node.isMesh) {
-                    node.material = new THREE.MeshPhysicalMaterial({
-                        color: "#D40000",
-                        metalness: 0.8, roughness: 0.1, clearcoat: 1.0
+            const model = gltf.scene;
+            
+            model.traverse((n) => {
+                if(n.isMesh) {
+                    // APPLY ROSSO CORSA FORMULA
+                    n.material = new THREE.MeshPhysicalMaterial({
+                        color: "#D40000", metalness: 0.8, roughness: 0.1, clearcoat: 1.0, reflectivity: 1
                     });
-                    // Define engine parts for explosion
-                    if(node.name.includes('Body') || node.name.includes('Engine')) {
-                        engineParts.add(node.clone());
+                    
+                    // Tagging parts for Stage 6 (Exploded View)
+                    if(n.name.includes('Body') || n.name.includes('Cover') || n.name.includes('Wing')) {
+                        shellParts.push(n);
                     }
                 }
             });
-            carGroup.add(carModel);
+
+            carGroup.add(model);
             
-            // Show Start Button
-            document.getElementById('progress-bar').classList.add('hidden');
-            document.getElementById('start-btn').classList.remove('hidden');
+            // Start Visuals
+            document.getElementById('loader').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('loader').remove();
+                document.getElementById('header-text').classList.add('active');
+                initAnimationMatrix();
+            }, 600);
         }, (xhr) => {
-            document.getElementById('progress-fill').style.width = (xhr.loaded / xhr.total * 100) + '%';
+            document.getElementById('fill').style.width = (xhr.loaded / xhr.total * 100) + '%';
         });
 
-        // Driver Helmets (Simplified High-Poly Modules)
-        const createHelmet = (color, pos) => {
-            const h = new THREE.Mesh(new THREE.SphereGeometry(0.4, 32, 32), new THREE.MeshPhysicalMaterial({color: color, clearcoat: 1}));
-            h.position.set(pos[0], pos[1], pos[2]);
-            h.scale.set(0,0,0);
-            accessories.add(h);
-            return h;
-        };
-        const helmet44 = createHelmet("#EFFF00", [-2, 2, 0]); // Hamilton Yellow
-        const helmet16 = createHelmet("#FFFFFF", [2, 2, 0]); // Leclerc White
-
-        // --- 4. ANIMATION DIRECTOR & SCROLL MATRIX ---
+        // --- 3. ANIMATION MATRIX (Mobile Scroll Optimized) ---
         gsap.registerPlugin(ScrollTrigger);
 
-        const stages = [
-            { pos: [10, 2, 10], look: [0,0,0], title: "SF-26 VISION", desc: "The aerodynamic climax of the 2026 regulations." },
-            { pos: [0, 2, -8], look: [0,1,-4], title: "REAR AERO", desc: "Dynamic DRS system with integrated air-tunnels." },
-            { pos: [0, 0.5, 7], look: [0,0,3], title: "FRONT WING", info: "High-downforce multi-plane assembly." },
-            { pos: [5, 0.5, 4], look: [2,0,4], title: "TYRE HUB", desc: "Pirelli 18-inch soft compound slicks." },
-            { pos: [0, 1.2, 0.5], look: [0,0.8,1], title: "COCKPIT", desc: "Sir Lewis Hamilton's command center." },
-            { pos: [3, 2, -2], look: [0,1,-1], title: "IDENTITY", desc: "A historic partnership: #44 meets the Tifosi." },
-            { pos: [0, 6, 0], look: [0,0,0], title: "POWER UNIT", desc: "Exploded View: V6 Turbo Hybrid Mechanical Reveal." },
-            { pos: [12, 1, 0], look: [0,0,0], title: "DRIVER MATRIX", desc: "Scuderia Ferrari 2026 Lineup confirmed." }
+        const states = [
+            { pos: [10, 2, 10], look: [0,0,0], t: "SF-26 VISION", d: "The future of Scuderia Ferrari." },
+            { pos: [0, 2, -7], look: [0,1,-4], t: "REAR AERO", d: "Active DRS and diffuser tunnels." },
+            { pos: [0, 0.5, 7], look: [0,0,4], t: "FRONT DOWNFORCE", d: "Multi-element wing assembly." },
+            { pos: [4, 0.5, 4], look: [2,0,3], t: "TYRE HUB", d: "Pirelli 18-inch soft compounds." },
+            { pos: [0, 1.2, 0.5], look: [0,0.8,1], t: "THE COCKPIT", d: "Command center for Hamilton #44." },
+            { pos: [3, 2, -2], look: [0,1.5,-1], t: "IDENTITY", d: "Seven-time champion meets the Tifosi." },
+            { pos: [0, 5, 0], look: [0,0,0], t: "ENGINE DECODE", d: "Revealing the V6 Turbo Hybrid (Stage 6)." },
+            { pos: [14, 1.5, 0], look: [0,0.5,0], t: "READY TO RACE", d: "Forza Ferrari. Mission 2026." }
         ];
 
-        document.getElementById('start-btn').addEventListener('click', () => {
-            initAudio();
-            gsap.to("#loader", { opacity: 0, duration: 1, onComplete: () => document.getElementById('loader').remove() });
-            initTimeline();
-        });
+        function initAnimationMatrix() {
+            camera.position.set(states[0].pos[0], states[0].pos[1], states[0].pos[2]);
 
-        function initTimeline() {
             const tl = gsap.timeline({
-                scrollTrigger: { trigger: "body", start: "top top", end: "bottom bottom", scrub: 1.5 }
+                scrollTrigger: {
+                    trigger: "body", start: "top top", end: "bottom bottom", scrub: 1.2
+                }
             });
 
-            stages.forEach((s, i) => {
-                // Camera Animation
+            states.forEach((s, i) => {
                 tl.to(camera.position, {
                     x: s.pos[0], y: s.pos[1], z: s.pos[2],
                     duration: 3, ease: "power2.inOut",
-                    onUpdate: () => {
-                        camera.lookAt(s.look[0], s.look[1], s.look[2]);
-                        // Audio Pitch Modulation
-                        if(oscillator) oscillator.frequency.value = 40 + (window.scrollY / 10);
-                    },
+                    onUpdate: () => camera.lookAt(s.look[0], s.look[1], s.look[2]),
                     onStart: () => {
-                        gsap.to("#info-card", { opacity: 1, y: 0, duration: 1 });
-                        document.getElementById('target-title').innerText = s.title;
-                        document.getElementById('target-desc').innerText = s.desc;
-                        document.getElementById('step-index').innerText = "0" + (i + 1);
+                        gsap.to("#card", { opacity: 1, y: 0, duration: 1 });
+                        document.getElementById('ui-title').innerText = s.t;
+                        document.getElementById('ui-desc').innerText = s.d;
+                        document.getElementById('step-id').innerText = "0" + (i + 1);
                     }
                 }, i * 3);
 
-                // STAGE 6: ENGINE EXPLOSION (IMAGE 1)
+                // THE CLIMAX: MECHANICAL EXPLOSION (Stage 6)
                 if(i === 6) {
-                    tl.to(carGroup.position, { y: -2, duration: 1 }, i * 3);
-                    carGroup.children.forEach(c => {
-                        tl.to(c.position, { y: 3, duration: 2, ease: "power4.out" }, i * 3);
+                    shellParts.forEach((part, pIdx) => {
+                        tl.to(part.position, { y: 4 + (pIdx*0.2), duration: 2, ease: "expo.out" }, i * 3);
                     });
                 }
-
-                // STAGE 7: HELMET DEPLOYMENT (IMAGE 10/11)
-                if(i === 7) {
-                    tl.to(helmet44.scale, { x:1, y:1, z:1, duration: 1 }, i * 3);
-                    tl.to(helmet16.scale, { x:1, y:1, z:1, duration: 1 }, i * 3);
-                }
             });
-
-            // INFINITE RESET ENGINE
+            
+            // Loop Back Reset
             ScrollTrigger.create({
-                trigger: "body", start: "95% bottom",
+                trigger: "body", start: "98% bottom",
                 onEnter: () => { window.scrollTo({ top: 0, behavior: 'smooth' }); }
             });
         }
@@ -218,7 +184,8 @@
         animate();
 
         window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight; camera.updateProjectionMatrix();
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
             renderer.setSize(window.innerWidth, window.innerHeight);
         });
     </script>
